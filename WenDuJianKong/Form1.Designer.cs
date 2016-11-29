@@ -82,7 +82,7 @@
             this.TotalControlBox.Name = "TotalControlBox";
             this.TotalControlBox.Size = new System.Drawing.Size(49, 21);
             this.TotalControlBox.TabIndex = 5;
-            this.TotalControlBox.Text = "100";
+            this.TotalControlBox.Text = "10";
             // 
             // Form1
             // 
