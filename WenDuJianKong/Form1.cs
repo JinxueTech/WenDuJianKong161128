@@ -10,11 +10,14 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.IO;
+using System.Data.SqlClient;
 
 namespace WenDuJianKong
 {
     public partial class Form1 : Form
     {
+        string connString = "Server=.;database=WenDuJianKong;user id=sa;password=81048204bylsbels ";
+
         AdvCANIO Device = new AdvCANIO();     
         bool m_bRun = false;
         bool syncflag = false;
@@ -401,6 +404,8 @@ namespace WenDuJianKong
                             Temperature[0] = (double)TempNum[0] / 10; ;
                             Temperature[1] = (double)TempNum[1] / 10; ;
                             Temperature[2] = (double)TempNum[2] / 10; ;
+                            SaveRecieveState123(Controller_Id, Id[0], Id[1], Id[2]);
+                            SaveRecieveTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2]);
                         }
                         else if (Type==1)   //设置4,5,6户状态，室内温度。
                         {
@@ -419,7 +424,8 @@ namespace WenDuJianKong
                             Temperature[3] = (double)TempNum[3] / 10; ;
                             Temperature[4] = (double)TempNum[4] / 10; ;
                             Temperature[5] = (double)TempNum[5] / 10; ;
-
+                            SaveRecieveState456(Controller_Id, Id[3], Id[4], Id[5]);
+                            SaveRecieveTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5]);
                         }
                     }
                 }
@@ -482,6 +488,75 @@ namespace WenDuJianKong
             //sfd.Filter = "(*.txt)|*.txt";
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void SaveRecieveState123(int Id,int id1,int id2,int id3)
+        {
+            string savestate123 = string.Format("insert into WKState(WangKongID,State1,State2,State3) values('{0}','{1}','{2}','{3}')", Id, id1, id2, id3);
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlCommand command1 = new SqlCommand(savestate123, conn);
+                command1.Connection.Open();
+                command1.ExecuteNonQuery();
+            }
+        }
+        private void SaveRecieveTemp123(int Id, double temp1, double temp2, double temp3)
+        {
+            string savetemp123 = string.Format("insert into WKTemp(WangKongID,Temperature1,Temperature2,Temperature3) values('{0}','{1}','{2}','{3}')", Id, temp1, temp2, temp3);
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlCommand command2 = new SqlCommand(savetemp123, conn);
+                command2.Connection.Open();
+                command2.ExecuteNonQuery();
+            }
+
+        }
+        private void SaveRecieveState456(int Id, int id1, int id2, int id3)
+        {
+            string savestate456 = string.Format("insert into WKState(WangKongID,State4,State5,State6) values('{0}','{1}','{2}','{3}')", Id, id1, id2, id3);
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlCommand command3 = new SqlCommand(savestate456, conn);
+                command3.Connection.Open();
+                command3.ExecuteNonQuery();
+            }
+        }
+        private void SaveRecieveTemp456(int Id, double temp1, double temp2, double temp3)
+        {
+            string savetemp456 = string.Format("insert into WKTemp(WangKongID,Temperature4,Temperature5,Temperature6) values('{0}','{1}','{2}','{3}')", Id, temp1, temp2, temp3);
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlCommand command4 = new SqlCommand(savetemp456, conn);
+                command4.Connection.Open();
+                command4.ExecuteNonQuery();
+            }
+
+        }
+
+
+
+
+        //private void SaveRecieveData456(int Id, int id1,int id2,int id3, double temp1,double temp2,double temp3)
+        //{
+        //    string savestate456 = string.Format("insert into WKState(WangKongID,State4,State5,State6) values('{0}','{1}','{2}','{3}')", Id, id1, id2, id3);
+        //    string savetemp456 = string.Format("insert into WKTemp(WangKongID,Temperature4,Temperature5,Temperature6) values('{0}','{1}','{2}','{3}')", Id, temp1, temp2, temp3);
+        //    using (SqlConnection conn = new SqlConnection(connString))
+        //    {
+        //        SqlCommand command = new SqlCommand(savestate456, conn);
+        //        command.Connection.Open();
+        //        SqlCommand command3 = new SqlCommand(savetemp456, conn);
+        //    }
+        //    conn.Open();
+
+            //SqlCommand command3 = new SqlCommand(savestate456, conn);
+            //SqlCommand command4 = new SqlCommand(savetemp456, conn);
+
+
     }
 }
+
+
 
