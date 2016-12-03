@@ -257,7 +257,7 @@ namespace WenDuJianKong
             while (true)
             {
                 SendTimeEveryMinute();
-                Thread.Sleep(6000);                 //发送时间线程间隔时间设置
+                Thread.Sleep(20000);                 //发送时间线程间隔时间设置20s
             }
         }
 
@@ -368,22 +368,22 @@ namespace WenDuJianKong
             {
                 for (int j = 0; j < pulNumberofRead; j++)
                 {
-                    ReceiveStatus = "Package";
-                    ReceiveStatus = ReceiveStatus + Convert.ToString(ReceiveIndex + j + 1) + "is";
+                    ReceiveStatus = "Package ";
+                    ReceiveStatus = ReceiveStatus + Convert.ToString(ReceiveIndex + j + 1) + " is ";
                     if (msgRead[j].id==AdvCan.ERRORID)
                     {
                         ReceiveStatus += "a incorrect package!";
                         ShowState(ReceiveStatus);
                         return;
                     }
-                    else
+                    else if(msgRead[j].id >0)
                     {
                         for (int i = 0; i < msgRead[j].length; i++)
                         {
                             ReceiveStatus += msgRead[j].data[i].ToString();
                             ReceiveStatus += " ";
-                            ShowState(ReceiveStatus);
                         }
+                        ShowState(ReceiveStatus);
                         Type = msgRead[0].data[0];
                         Format = msgRead[0].data[1];
                         Controller_Id = (int)msgRead[0].id;         //网络控制器id，需要输出。
@@ -405,7 +405,9 @@ namespace WenDuJianKong
                             Temperature[1] = (double)TempNum[1] / 10; ;
                             Temperature[2] = (double)TempNum[2] / 10; ;
                             SaveRecieveState123(Controller_Id, Id[0], Id[1], Id[2]);
+                            //nSaveRecieveState123(Controller_Id, Id[0], Id[1], Id[2]);
                             SaveRecieveTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2]);
+                           // nSaveRecieveTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2]);
                         }
                         else if (Type==1)   //设置4,5,6户状态，室内温度。
                         {
@@ -425,7 +427,9 @@ namespace WenDuJianKong
                             Temperature[4] = (double)TempNum[4] / 10; ;
                             Temperature[5] = (double)TempNum[5] / 10; ;
                             SaveRecieveState456(Controller_Id, Id[3], Id[4], Id[5]);
+                            //nSaveRecieveState456(Controller_Id, Id[3], Id[4], Id[5]);
                             SaveRecieveTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5]);
+                           // nSaveRecieveTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5]);
                         }
                     }
                 }
@@ -490,9 +494,17 @@ namespace WenDuJianKong
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            treeView1.ExpandAll();
         }
 
+        #region 向数据库写入数据函数
+        /// <summary>
+        /// 存123户状态到主表中。
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="id1"></param>
+        /// <param name="id2"></param>
+        /// <param name="id3"></param>
         private void SaveRecieveState123(int Id,int id1,int id2,int id3)
         {
             string savestate123 = string.Format("insert into WKState(WangKongID,State1,State2,State3) values('{0}','{1}','{2}','{3}')", Id, id1, id2, id3);
@@ -503,6 +515,32 @@ namespace WenDuJianKong
                 command1.ExecuteNonQuery();
             }
         }
+        /// <summary>
+        /// 存123户的状态到该网控器表中。
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="id1"></param>
+        /// <param name="id2"></param>
+        /// <param name="id3"></param>
+        private void nSaveRecieveState123(int Id, int id1, int id2, int id3)
+        {
+            string nId = Id.ToString();
+            string biaoming = "WKState" + nId+ "123";
+            string nsavestate123 = string.Format("insert into {0}(WangKongID,State1,State2,State3) values('{1}','{2}','{3}','{4}')", biaoming ,Id, id1, id2, id3);
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlCommand command1 = new SqlCommand(nsavestate123, conn);
+                command1.Connection.Open();
+                command1.ExecuteNonQuery();
+            }
+        }
+        /// <summary>
+        /// 存123户温度到主表中。
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="temp1"></param>
+        /// <param name="temp2"></param>
+        /// <param name="temp3"></param>
         private void SaveRecieveTemp123(int Id, double temp1, double temp2, double temp3)
         {
             string savetemp123 = string.Format("insert into WKTemp(WangKongID,Temperature1,Temperature2,Temperature3) values('{0}','{1}','{2}','{3}')", Id, temp1, temp2, temp3);
@@ -514,6 +552,33 @@ namespace WenDuJianKong
             }
 
         }
+        /// <summary>
+        /// 存123户温度到该网控器表中。
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="temp1"></param>
+        /// <param name="temp2"></param>
+        /// <param name="temp3"></param>
+        private void nSaveRecieveTemp123(int Id, double temp1, double temp2, double temp3)
+        {
+            string nId = Id.ToString();
+            string biaoming = "WKTemp" + nId +"123";
+            string nsavetemp123 = string.Format("insert into {0}(WangKongID,Temperature1,Temperature2,Temperature3) values('{1}','{2}','{3}','{4}')", biaoming , Id, temp1, temp2, temp3);
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlCommand command1 = new SqlCommand(nsavetemp123, conn);
+                command1.Connection.Open();
+                command1.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// 存456户状态到主表中。
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="id1"></param>
+        /// <param name="id2"></param>
+        /// <param name="id3"></param>
         private void SaveRecieveState456(int Id, int id1, int id2, int id3)
         {
             string savestate456 = string.Format("insert into WKState(WangKongID,State4,State5,State6) values('{0}','{1}','{2}','{3}')", Id, id1, id2, id3);
@@ -524,6 +589,33 @@ namespace WenDuJianKong
                 command3.ExecuteNonQuery();
             }
         }
+        /// <summary>
+        /// 存456户状态到网控器表中。
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="id1"></param>
+        /// <param name="id2"></param>
+        /// <param name="id3"></param>
+        private void nSaveRecieveState456(int Id, int id1, int id2, int id3)
+        {
+            string nId = Id.ToString();
+            string biaoming = "WKState" + nId + "456";
+            string savestate456 = string.Format("insert into {0}(WangKongID,State4,State5,State6) values('{1}','{2}','{3}','{4}')", biaoming ,Id, id1, id2, id3);
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlCommand command3 = new SqlCommand(savestate456, conn);
+                command3.Connection.Open();
+                command3.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// 存456户温度到主表中
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="temp1"></param>
+        /// <param name="temp2"></param>
+        /// <param name="temp3"></param>
         private void SaveRecieveTemp456(int Id, double temp1, double temp2, double temp3)
         {
             string savetemp456 = string.Format("insert into WKTemp(WangKongID,Temperature4,Temperature5,Temperature6) values('{0}','{1}','{2}','{3}')", Id, temp1, temp2, temp3);
@@ -535,7 +627,42 @@ namespace WenDuJianKong
             }
 
         }
+        /// <summary>
+        /// 存456户温度到该网控器表中。
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="temp1"></param>
+        /// <param name="temp2"></param>
+        /// <param name="temp3"></param>
+        private void nSaveRecieveTemp456(int Id, double temp1, double temp2, double temp3)
+        {
+            string nId = Id.ToString();
+            string biaoming = "WKTemp" + nId + "456";
+            string savetemp456 = string.Format("insert into {0}(WangKongID,Temperature4,Temperature5,Temperature6) values('{1}','{2}','{3}','{4}')",biaoming , Id, temp1, temp2, temp3);
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlCommand command4 = new SqlCommand(savetemp456, conn);
+                command4.Connection.Open();
+                command4.ExecuteNonQuery();
+            }
 
+        }
+
+
+
+
+        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            string text = e.Node.Text;
+            switch (text)
+            {
+                case "五号楼":
+                    Form2 form2 = new Form2();
+                    form2.ShowDialog();
+                    break;
+            }
+        }
+        #endregion
 
 
 
@@ -551,8 +678,8 @@ namespace WenDuJianKong
         //    }
         //    conn.Open();
 
-            //SqlCommand command3 = new SqlCommand(savestate456, conn);
-            //SqlCommand command4 = new SqlCommand(savetemp456, conn);
+        //SqlCommand command3 = new SqlCommand(savestate456, conn);
+        //SqlCommand command4 = new SqlCommand(savetemp456, conn);
 
 
     }
