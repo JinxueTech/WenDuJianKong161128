@@ -405,9 +405,13 @@ namespace WenDuJianKong
                             Temperature[1] = (double)TempNum[1] / 10; ;
                             Temperature[2] = (double)TempNum[2] / 10; ;
                             SaveRecieveState123(Controller_Id, Id[0], Id[1], Id[2]);
-                            //nSaveRecieveState123(Controller_Id, Id[0], Id[1], Id[2]);
+                            nSaveRecieveState123(Controller_Id, Id[0], Id[1], Id[2]);
                             SaveRecieveTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2]);
-                           // nSaveRecieveTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2]);
+                            nSaveRecieveTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2]);
+                            nUpdateState123(Controller_Id, Id[0], Id[1], Id[2]);
+                            nUpdateTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2]);
+                            
+
                         }
                         else if (Type==1)   //设置4,5,6户状态，室内温度。
                         {
@@ -427,9 +431,12 @@ namespace WenDuJianKong
                             Temperature[4] = (double)TempNum[4] / 10; ;
                             Temperature[5] = (double)TempNum[5] / 10; ;
                             SaveRecieveState456(Controller_Id, Id[3], Id[4], Id[5]);
-                            //nSaveRecieveState456(Controller_Id, Id[3], Id[4], Id[5]);
+                            nSaveRecieveState456(Controller_Id, Id[3], Id[4], Id[5]);
                             SaveRecieveTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5]);
-                           // nSaveRecieveTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5]);
+                            nSaveRecieveTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5]);
+                            nUpdateState456(Controller_Id, Id[3], Id[4], Id[5]);
+                            nUpdateTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5]);
+
                         }
                     }
                 }
@@ -648,7 +655,62 @@ namespace WenDuJianKong
 
         }
 
+        /// <summary>
+        /// 更新界面显示表对应数据库，网控器ID的123户温度，数据库信息。
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="temp1"></param>
+        /// <param name="temp2"></param>
+        /// <param name="temp3"></param>
+        private void nUpdateTemp123(int Id, double temp1, double temp2, double temp3)
+        {
+            string nId = Id.ToString();
+            string updatetemp123 = string.Format("update TempState set Temperature1='{0}',Temperature2='{1}',Temperature3='{2}' where WangKongID='{3}'", temp1, temp2, temp3, Id);
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlCommand command7 = new SqlCommand(updatetemp123, conn);
+                command7.Connection.Open();
+                command7.ExecuteNonQuery();
+            }
 
+        }
+
+        private void nUpdateTemp456(int Id, double temp1, double temp2, double temp3)
+        {
+            string nId = Id.ToString();
+            string updatetemp456 = string.Format("update TempState set Temperature4='{0}',Temperature5='{1}',Temperature6='{2}' where WangKongID='{3}'", temp1, temp2, temp3, Id);
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlCommand command8 = new SqlCommand(updatetemp456, conn);
+                command8.Connection.Open();
+                command8.ExecuteNonQuery();
+            }
+
+        }
+
+        private void nUpdateState123(int Id, int id1, int id2, int id3)
+        {
+            string nId = Id.ToString();
+            string updatestate123 = string.Format("update TempState set State1='{0}',State2='{1}',State3='{2}' where WangKongID='{3}'", id1, id2, id3, Id);
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlCommand command9 = new SqlCommand(updatestate123, conn);
+                command9.Connection.Open();
+                command9.ExecuteNonQuery();
+            }
+        }
+
+        private void nUpdateState456(int Id, int id1, int id2, int id3)
+        {
+            string nId = Id.ToString();
+            string updatestate456 = string.Format("update TempState set State4='{0}',State5='{1}',State6='{2}' where WangKongID='{3}'", id1, id2, id3, Id);
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlCommand command10 = new SqlCommand(updatestate456, conn);
+                command10.Connection.Open();
+                command10.ExecuteNonQuery();
+            }
+        }
 
 
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
