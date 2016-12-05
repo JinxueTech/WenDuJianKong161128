@@ -343,7 +343,7 @@ namespace WenDuJianKong
             int[] Id = new int[6];                          //存入6户的状态，需要输出。0防冻，1无人，2有人。
             UInt16[] TempNum = new UInt16[6];
             double[] Temperature = new double[6];           //存入6户的温度，需要输出。
-
+            string Time = DateTime.Now.ToString();
             //AdvCan.canmsg_t[] msgRead = new AdvCan.canmsg_t[nMsgCount];
             //for (int i = 0; i < nMsgCount; i++)
             //{
@@ -408,8 +408,8 @@ namespace WenDuJianKong
                             nSaveRecieveState123(Controller_Id, Id[0], Id[1], Id[2]);
                             SaveRecieveTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2]);
                             nSaveRecieveTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2]);
-                            nUpdateState123(Controller_Id, Id[0], Id[1], Id[2]);
-                            nUpdateTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2]);
+                            nUpdateState123(Controller_Id, Id[0], Id[1], Id[2],Time);
+                            nUpdateTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2],Time);
                             
 
                         }
@@ -434,8 +434,8 @@ namespace WenDuJianKong
                             nSaveRecieveState456(Controller_Id, Id[3], Id[4], Id[5]);
                             SaveRecieveTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5]);
                             nSaveRecieveTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5]);
-                            nUpdateState456(Controller_Id, Id[3], Id[4], Id[5]);
-                            nUpdateTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5]);
+                            nUpdateState456(Controller_Id, Id[3], Id[4], Id[5],Time);
+                            nUpdateTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5],Time);
 
                         }
                     }
@@ -662,10 +662,10 @@ namespace WenDuJianKong
         /// <param name="temp1"></param>
         /// <param name="temp2"></param>
         /// <param name="temp3"></param>
-        private void nUpdateTemp123(int Id, double temp1, double temp2, double temp3)
+        private void nUpdateTemp123(int Id, double temp1, double temp2, double temp3,string time)
         {
             string nId = Id.ToString();
-            string updatetemp123 = string.Format("update TempState set Temperature1='{0}',Temperature2='{1}',Temperature3='{2}' where WangKongID='{3}'", temp1, temp2, temp3, Id);
+            string updatetemp123 = string.Format("update TempState set Temperature1='{0}',Temperature2='{1}',Temperature3='{2}',Time='{3}' where WangKongID='{4}'", temp1, temp2, temp3, time,Id);
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 SqlCommand command7 = new SqlCommand(updatetemp123, conn);
@@ -675,10 +675,10 @@ namespace WenDuJianKong
 
         }
 
-        private void nUpdateTemp456(int Id, double temp1, double temp2, double temp3)
+        private void nUpdateTemp456(int Id, double temp1, double temp2, double temp3,string time)
         {
             string nId = Id.ToString();
-            string updatetemp456 = string.Format("update TempState set Temperature4='{0}',Temperature5='{1}',Temperature6='{2}' where WangKongID='{3}'", temp1, temp2, temp3, Id);
+            string updatetemp456 = string.Format("update TempState set Temperature4='{0}',Temperature5='{1}',Temperature6='{2}',Time='{3}' where WangKongID='{4}'", temp1, temp2, temp3, time,Id);
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 SqlCommand command8 = new SqlCommand(updatetemp456, conn);
@@ -688,10 +688,10 @@ namespace WenDuJianKong
 
         }
 
-        private void nUpdateState123(int Id, int id1, int id2, int id3)
+        private void nUpdateState123(int Id, int id1, int id2, int id3,string time)
         {
             string nId = Id.ToString();
-            string updatestate123 = string.Format("update TempState set State1='{0}',State2='{1}',State3='{2}' where WangKongID='{3}'", id1, id2, id3, Id);
+            string updatestate123 = string.Format("update TempState set State1='{0}',State2='{1}',State3='{2}',Time='{3}' where WangKongID='{4}'", id1, id2, id3, time,Id);
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 SqlCommand command9 = new SqlCommand(updatestate123, conn);
@@ -700,10 +700,10 @@ namespace WenDuJianKong
             }
         }
 
-        private void nUpdateState456(int Id, int id1, int id2, int id3)
+        private void nUpdateState456(int Id, int id1, int id2, int id3,string time)
         {
             string nId = Id.ToString();
-            string updatestate456 = string.Format("update TempState set State4='{0}',State5='{1}',State6='{2}' where WangKongID='{3}'", id1, id2, id3, Id);
+            string updatestate456 = string.Format("update TempState set State4='{0}',State5='{1}',State6='{2}',Time='{3}' where WangKongID='{4}'", id1, id2, id3, time, Id);
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 SqlCommand command10 = new SqlCommand(updatestate456, conn);

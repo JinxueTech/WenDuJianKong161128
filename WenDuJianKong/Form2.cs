@@ -60,7 +60,7 @@ namespace WenDuJianKong
             catch(System.Exception ex)
             {
                 e.FormattingApplied = false;
-                toolStripStatusLabel1.Text = ex.ToString();
+                toolStripStatusLabel1.Text = "系统提示："+ex.ToString();
             }
         }
     }

@@ -30,12 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.wenDuJianKongDataSet = new WenDuJianKong.WenDuJianKongDataSet();
-            this.tempStateBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tempStateTableAdapter = new WenDuJianKong.WenDuJianKongDataSetTableAdapters.TempStateTableAdapter();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.wangKongIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.floorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.temperature1DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,10 +41,16 @@
             this.temperature4DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.state4DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tempStateBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.wenDuJianKongDataSet = new WenDuJianKong.WenDuJianKongDataSet();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tempStateTableAdapter = new WenDuJianKong.WenDuJianKongDataSetTableAdapters.TempStateTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.wenDuJianKongDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tempStateBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wenDuJianKongDataSet)).BeginInit();
+            this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,46 +82,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(884, 562);
             this.dataGridView1.TabIndex = 10;
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.statusStrip1);
-            this.panel1.Controls.Add(this.dataGridView1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(884, 562);
-            this.panel1.TabIndex = 11;
-            // 
-            // wenDuJianKongDataSet
-            // 
-            this.wenDuJianKongDataSet.DataSetName = "WenDuJianKongDataSet";
-            this.wenDuJianKongDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // tempStateBindingSource
-            // 
-            this.tempStateBindingSource.DataMember = "TempState";
-            this.tempStateBindingSource.DataSource = this.wenDuJianKongDataSet;
-            // 
-            // tempStateTableAdapter
-            // 
-            this.tempStateTableAdapter.ClearBeforeFill = true;
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 540);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(884, 22);
-            this.statusStrip1.TabIndex = 11;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(131, 17);
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // wangKongIDDataGridViewTextBoxColumn
             // 
@@ -200,6 +160,46 @@
             this.timeDataGridViewTextBoxColumn.Name = "timeDataGridViewTextBoxColumn";
             this.timeDataGridViewTextBoxColumn.ReadOnly = true;
             // 
+            // tempStateBindingSource
+            // 
+            this.tempStateBindingSource.DataMember = "TempState";
+            this.tempStateBindingSource.DataSource = this.wenDuJianKongDataSet;
+            // 
+            // wenDuJianKongDataSet
+            // 
+            this.wenDuJianKongDataSet.DataSetName = "WenDuJianKongDataSet";
+            this.wenDuJianKongDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.statusStrip1);
+            this.panel1.Controls.Add(this.dataGridView1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(884, 562);
+            this.panel1.TabIndex = 11;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 540);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(884, 22);
+            this.statusStrip1.TabIndex = 11;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(68, 17);
+            this.toolStripStatusLabel1.Text = "系统提示：";
+            // 
+            // tempStateTableAdapter
+            // 
+            this.tempStateTableAdapter.ClearBeforeFill = true;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -211,10 +211,10 @@
             this.Text = "北区五号楼平面分布图";
             this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tempStateBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wenDuJianKongDataSet)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.wenDuJianKongDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tempStateBindingSource)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
