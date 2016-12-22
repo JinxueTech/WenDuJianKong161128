@@ -23,6 +23,7 @@ namespace WenDuJianKong
         {
             // TODO: 这行代码将数据加载到表“wenDuJianKongDataSet.TempState”中。您可以根据需要移动或删除它。
             this.tempStateTableAdapter.Fill(this.wenDuJianKongDataSet.TempState);
+            
 
         }
 

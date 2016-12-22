@@ -404,10 +404,10 @@ namespace WenDuJianKong
                             Temperature[0] = (double)TempNum[0] / 10; ;
                             Temperature[1] = (double)TempNum[1] / 10; ;
                             Temperature[2] = (double)TempNum[2] / 10; ;
-                            SaveRecieveState123(Controller_Id, Id[0], Id[1], Id[2]);
-                            nSaveRecieveState123(Controller_Id, Id[0], Id[1], Id[2]);
-                            SaveRecieveTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2]);
-                            nSaveRecieveTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2]);
+                            SaveRecieveState123(Controller_Id, Id[0], Id[1], Id[2],Time);
+                            nSaveRecieveState123(Controller_Id, Id[0], Id[1], Id[2],Time);
+                            SaveRecieveTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2],Time);
+                            nSaveRecieveTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2],Time);
                             nUpdateState123(Controller_Id, Id[0], Id[1], Id[2],Time);
                             nUpdateTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2],Time);
                             
@@ -430,10 +430,10 @@ namespace WenDuJianKong
                             Temperature[3] = (double)TempNum[3] / 10; ;
                             Temperature[4] = (double)TempNum[4] / 10; ;
                             Temperature[5] = (double)TempNum[5] / 10; ;
-                            SaveRecieveState456(Controller_Id, Id[3], Id[4], Id[5]);
-                            nSaveRecieveState456(Controller_Id, Id[3], Id[4], Id[5]);
-                            SaveRecieveTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5]);
-                            nSaveRecieveTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5]);
+                            SaveRecieveState456(Controller_Id, Id[3], Id[4], Id[5],Time);
+                            nSaveRecieveState456(Controller_Id, Id[3], Id[4], Id[5],Time);
+                            SaveRecieveTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5],Time);
+                            nSaveRecieveTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5],Time);
                             nUpdateState456(Controller_Id, Id[3], Id[4], Id[5],Time);
                             nUpdateTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5],Time);
 
@@ -512,9 +512,9 @@ namespace WenDuJianKong
         /// <param name="id1"></param>
         /// <param name="id2"></param>
         /// <param name="id3"></param>
-        private void SaveRecieveState123(int Id,int id1,int id2,int id3)
+        private void SaveRecieveState123(int Id,int id1,int id2,int id3,string time)
         {
-            string savestate123 = string.Format("insert into WKState(WangKongID,State1,State2,State3) values('{0}','{1}','{2}','{3}')", Id, id1, id2, id3);
+            string savestate123 = string.Format("insert into WKState(WangKongID,State1,State2,State3,Time) values('{0}','{1}','{2}','{3}','{4}')", Id, id1, id2, id3,time);
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 SqlCommand command1 = new SqlCommand(savestate123, conn);
@@ -529,11 +529,11 @@ namespace WenDuJianKong
         /// <param name="id1"></param>
         /// <param name="id2"></param>
         /// <param name="id3"></param>
-        private void nSaveRecieveState123(int Id, int id1, int id2, int id3)
+        private void nSaveRecieveState123(int Id, int id1, int id2, int id3,string time)
         {
             string nId = Id.ToString();
             string biaoming = "WKState" + nId+ "123";
-            string nsavestate123 = string.Format("insert into {0}(WangKongID,State1,State2,State3) values('{1}','{2}','{3}','{4}')", biaoming ,Id, id1, id2, id3);
+            string nsavestate123 = string.Format("insert into {0}(WangKongID,State1,State2,State3,Time) values('{1}','{2}','{3}','{4}','{5}')", biaoming ,Id, id1, id2, id3,time);
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 SqlCommand command1 = new SqlCommand(nsavestate123, conn);
@@ -548,9 +548,9 @@ namespace WenDuJianKong
         /// <param name="temp1"></param>
         /// <param name="temp2"></param>
         /// <param name="temp3"></param>
-        private void SaveRecieveTemp123(int Id, double temp1, double temp2, double temp3)
+        private void SaveRecieveTemp123(int Id, double temp1, double temp2, double temp3,string time)
         {
-            string savetemp123 = string.Format("insert into WKTemp(WangKongID,Temperature1,Temperature2,Temperature3) values('{0}','{1}','{2}','{3}')", Id, temp1, temp2, temp3);
+            string savetemp123 = string.Format("insert into WKTemp(WangKongID,Temperature1,Temperature2,Temperature3,Time) values('{0}','{1}','{2}','{3}','{4}')", Id, temp1, temp2, temp3,time);
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 SqlCommand command2 = new SqlCommand(savetemp123, conn);
@@ -566,11 +566,11 @@ namespace WenDuJianKong
         /// <param name="temp1"></param>
         /// <param name="temp2"></param>
         /// <param name="temp3"></param>
-        private void nSaveRecieveTemp123(int Id, double temp1, double temp2, double temp3)
+        private void nSaveRecieveTemp123(int Id, double temp1, double temp2, double temp3,string time)
         {
             string nId = Id.ToString();
             string biaoming = "WKTemp" + nId +"123";
-            string nsavetemp123 = string.Format("insert into {0}(WangKongID,Temperature1,Temperature2,Temperature3) values('{1}','{2}','{3}','{4}')", biaoming , Id, temp1, temp2, temp3);
+            string nsavetemp123 = string.Format("insert into {0}(WangKongID,Temperature1,Temperature2,Temperature3,Time) values('{1}','{2}','{3}','{4}','{5}')", biaoming , Id, temp1, temp2, temp3,time);
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 SqlCommand command1 = new SqlCommand(nsavetemp123, conn);
@@ -586,9 +586,9 @@ namespace WenDuJianKong
         /// <param name="id1"></param>
         /// <param name="id2"></param>
         /// <param name="id3"></param>
-        private void SaveRecieveState456(int Id, int id1, int id2, int id3)
+        private void SaveRecieveState456(int Id, int id1, int id2, int id3,string time)
         {
-            string savestate456 = string.Format("insert into WKState(WangKongID,State4,State5,State6) values('{0}','{1}','{2}','{3}')", Id, id1, id2, id3);
+            string savestate456 = string.Format("insert into WKState(WangKongID,State4,State5,State6,Time) values('{0}','{1}','{2}','{3}','{4}')", Id, id1, id2, id3,time);
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 SqlCommand command3 = new SqlCommand(savestate456, conn);
@@ -603,11 +603,11 @@ namespace WenDuJianKong
         /// <param name="id1"></param>
         /// <param name="id2"></param>
         /// <param name="id3"></param>
-        private void nSaveRecieveState456(int Id, int id1, int id2, int id3)
+        private void nSaveRecieveState456(int Id, int id1, int id2, int id3,string time)
         {
             string nId = Id.ToString();
             string biaoming = "WKState" + nId + "456";
-            string savestate456 = string.Format("insert into {0}(WangKongID,State4,State5,State6) values('{1}','{2}','{3}','{4}')", biaoming ,Id, id1, id2, id3);
+            string savestate456 = string.Format("insert into {0}(WangKongID,State4,State5,State6,Time) values('{1}','{2}','{3}','{4}','{5}')", biaoming ,Id, id1, id2, id3,time);
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 SqlCommand command3 = new SqlCommand(savestate456, conn);
@@ -623,9 +623,9 @@ namespace WenDuJianKong
         /// <param name="temp1"></param>
         /// <param name="temp2"></param>
         /// <param name="temp3"></param>
-        private void SaveRecieveTemp456(int Id, double temp1, double temp2, double temp3)
+        private void SaveRecieveTemp456(int Id, double temp1, double temp2, double temp3,string time)
         {
-            string savetemp456 = string.Format("insert into WKTemp(WangKongID,Temperature4,Temperature5,Temperature6) values('{0}','{1}','{2}','{3}')", Id, temp1, temp2, temp3);
+            string savetemp456 = string.Format("insert into WKTemp(WangKongID,Temperature4,Temperature5,Temperature6,Time) values('{0}','{1}','{2}','{3}','{4}')", Id, temp1, temp2, temp3,time);
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 SqlCommand command4 = new SqlCommand(savetemp456, conn);
@@ -641,11 +641,11 @@ namespace WenDuJianKong
         /// <param name="temp1"></param>
         /// <param name="temp2"></param>
         /// <param name="temp3"></param>
-        private void nSaveRecieveTemp456(int Id, double temp1, double temp2, double temp3)
+        private void nSaveRecieveTemp456(int Id, double temp1, double temp2, double temp3,string time)
         {
             string nId = Id.ToString();
             string biaoming = "WKTemp" + nId + "456";
-            string savetemp456 = string.Format("insert into {0}(WangKongID,Temperature4,Temperature5,Temperature6) values('{1}','{2}','{3}','{4}')",biaoming , Id, temp1, temp2, temp3);
+            string savetemp456 = string.Format("insert into {0}(WangKongID,Temperature4,Temperature5,Temperature6,Time) values('{1}','{2}','{3}','{4}','{5}')",biaoming , Id, temp1, temp2, temp3,time);
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 SqlCommand command4 = new SqlCommand(savetemp456, conn);

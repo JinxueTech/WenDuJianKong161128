@@ -30,16 +30,16 @@
             this.TotalControlBox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel6 = new System.Windows.Forms.Panel();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.panel6 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.panel5.SuspendLayout();
             this.panel6.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // ShowStatus
@@ -99,7 +99,7 @@
             this.TotalControlBox.Name = "TotalControlBox";
             this.TotalControlBox.Size = new System.Drawing.Size(49, 21);
             this.TotalControlBox.TabIndex = 5;
-            this.TotalControlBox.Text = "10";
+            this.TotalControlBox.Text = "20";
             // 
             // panel1
             // 
@@ -119,6 +119,14 @@
             this.panel2.Size = new System.Drawing.Size(563, 419);
             this.panel2.TabIndex = 7;
             // 
+            // panel4
+            // 
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel4.Location = new System.Drawing.Point(176, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(387, 419);
+            this.panel4.TabIndex = 1;
+            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.panel6);
@@ -129,13 +137,14 @@
             this.panel3.Size = new System.Drawing.Size(178, 419);
             this.panel3.TabIndex = 0;
             // 
-            // panel4
+            // panel6
             // 
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel4.Location = new System.Drawing.Point(176, 0);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(387, 419);
-            this.panel4.TabIndex = 1;
+            this.panel6.Controls.Add(this.treeView1);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel6.Location = new System.Drawing.Point(0, 33);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(178, 386);
+            this.panel6.TabIndex = 2;
             // 
             // treeView1
             // 
@@ -163,15 +172,6 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(178, 37);
             this.panel5.TabIndex = 1;
-            // 
-            // panel6
-            // 
-            this.panel6.Controls.Add(this.treeView1);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel6.Location = new System.Drawing.Point(0, 33);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(178, 386);
-            this.panel6.TabIndex = 2;
             // 
             // label2
             // 
@@ -204,9 +204,9 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.panel6.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
-            this.panel6.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
