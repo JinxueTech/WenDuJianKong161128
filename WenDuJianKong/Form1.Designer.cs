@@ -18,10 +18,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("五号楼");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("北区", new System.Windows.Forms.TreeNode[] {
-            treeNode1});
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("南区");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("三号楼");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("五号楼");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("北区", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("南区");
             this.ShowStatus = new System.Windows.Forms.ListBox();
             this.StartStop = new System.Windows.Forms.Button();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -99,7 +101,7 @@
             this.TotalControlBox.Name = "TotalControlBox";
             this.TotalControlBox.Size = new System.Drawing.Size(49, 21);
             this.TotalControlBox.TabIndex = 5;
-            this.TotalControlBox.Text = "20";
+            this.TotalControlBox.Text = "50";
             // 
             // panel1
             // 
@@ -151,15 +153,17 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            treeNode1.Name = "五号楼";
-            treeNode1.Text = "五号楼";
-            treeNode2.Name = "北区";
-            treeNode2.Text = "北区";
-            treeNode3.Name = "南区";
-            treeNode3.Text = "南区";
+            treeNode1.Name = "三号楼";
+            treeNode1.Text = "三号楼";
+            treeNode2.Name = "五号楼";
+            treeNode2.Text = "五号楼";
+            treeNode3.Name = "北区";
+            treeNode3.Text = "北区";
+            treeNode4.Name = "南区";
+            treeNode4.Text = "南区";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2,
-            treeNode3});
+            treeNode3,
+            treeNode4});
             this.treeView1.Size = new System.Drawing.Size(178, 386);
             this.treeView1.TabIndex = 0;
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);

@@ -376,7 +376,7 @@ namespace WenDuJianKong
                         ShowState(ReceiveStatus);
                         return;
                     }
-                    else if(msgRead[j].id >0)
+                    else if(msgRead[j].id >0&& msgRead[j].id<41)
                     {
                         for (int i = 0; i < msgRead[j].length; i++)
                         {
@@ -408,8 +408,8 @@ namespace WenDuJianKong
                             nSaveRecieveState123(Controller_Id, Id[0], Id[1], Id[2],Time);
                             SaveRecieveTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2],Time);
                             nSaveRecieveTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2],Time);
-                            nUpdateState123(Controller_Id, Id[0], Id[1], Id[2],Time);
-                            nUpdateTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2],Time);
+                            nUpdateState1235(Controller_Id, Id[0], Id[1], Id[2],Time);
+                            nUpdateTemp1235(Controller_Id, Temperature[0], Temperature[1], Temperature[2],Time);
                             
 
                         }
@@ -434,8 +434,72 @@ namespace WenDuJianKong
                             nSaveRecieveState456(Controller_Id, Id[3], Id[4], Id[5],Time);
                             SaveRecieveTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5],Time);
                             nSaveRecieveTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5],Time);
-                            nUpdateState456(Controller_Id, Id[3], Id[4], Id[5],Time);
-                            nUpdateTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5],Time);
+                            nUpdateState4565(Controller_Id, Id[3], Id[4], Id[5],Time);
+                            nUpdateTemp4565(Controller_Id, Temperature[3], Temperature[4], Temperature[5],Time);
+
+                        }
+                    }
+                    else if (msgRead[j].id>40&&msgRead[j].id<93)
+                    {
+
+                        for (int i = 0; i < msgRead[j].length; i++)
+                        {
+                            ReceiveStatus += msgRead[j].data[i].ToString();
+                            ReceiveStatus += " ";
+                        }
+                        ShowState(ReceiveStatus);
+                        Type = msgRead[0].data[0];
+                        Format = msgRead[0].data[1];
+                        Controller_Id = (int)msgRead[0].id;         //网络控制器id，需要输出。
+                        if (Type == 0)    //设置1,2,3户状态，室内温度。
+                        {
+                            Sta_Id[0] = (byte)(((byte)(msgRead[0].data[1] >> 2)) & 0x03);   //0防冻 1无人 2有人
+                            Sta_Id[1] = (byte)(((byte)(msgRead[0].data[1] >> 4)) & 0x03);
+                            Sta_Id[2] = (byte)(((byte)(msgRead[0].data[1] >> 6)) & 0x03);
+                            Id[0] = Sta_Id[0];                                              //1户  的状态0防冻 1无人 2有人
+                            Id[1] = Sta_Id[1];                                              //2户
+                            Id[2] = Sta_Id[2];                                              //3户
+                            byte[] temp1 = new byte[2] { msgRead[0].data[2], msgRead[0].data[3] };
+                            byte[] temp2 = new byte[2] { msgRead[0].data[4], msgRead[0].data[5] };
+                            byte[] temp3 = new byte[2] { msgRead[0].data[6], msgRead[0].data[7] };
+                            TempNum[0] = BitConverter.ToUInt16(temp1, 0);                   //两个字节转换来的16位无符号整数。
+                            TempNum[1] = BitConverter.ToUInt16(temp2, 0);
+                            TempNum[2] = BitConverter.ToUInt16(temp3, 0);
+                            Temperature[0] = (double)TempNum[0] / 10; ;
+                            Temperature[1] = (double)TempNum[1] / 10; ;
+                            Temperature[2] = (double)TempNum[2] / 10; ;
+                            SaveRecieveState123(Controller_Id, Id[0], Id[1], Id[2], Time);
+                            nSaveRecieveState123(Controller_Id, Id[0], Id[1], Id[2], Time);
+                            SaveRecieveTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2], Time);
+                            nSaveRecieveTemp123(Controller_Id, Temperature[0], Temperature[1], Temperature[2], Time);
+                            nUpdateState1233(Controller_Id, Id[0], Id[1], Id[2], Time);
+                            nUpdateTemp1233(Controller_Id, Temperature[0], Temperature[1], Temperature[2], Time);
+
+
+                        }
+                        else if (Type == 1)   //设置4,5,6户状态，室内温度。
+                        {
+                            Sta_Id[3] = (byte)(((byte)(msgRead[0].data[1] >> 2)) & 0x03);   //0防冻 1无人 2有人
+                            Sta_Id[4] = (byte)(((byte)(msgRead[0].data[1] >> 4)) & 0x03);
+                            Sta_Id[5] = (byte)(((byte)(msgRead[0].data[1] >> 6)) & 0x03);
+                            Id[3] = Sta_Id[3];                                              //4户  的状态0防冻 1无人 2有人
+                            Id[4] = Sta_Id[4];                                              //5户
+                            Id[5] = Sta_Id[5];                                              //6户
+                            byte[] temp4 = new byte[2] { msgRead[0].data[2], msgRead[0].data[3] };
+                            byte[] temp5 = new byte[2] { msgRead[0].data[4], msgRead[0].data[5] };
+                            byte[] temp6 = new byte[2] { msgRead[0].data[6], msgRead[0].data[7] };
+                            TempNum[3] = BitConverter.ToUInt16(temp4, 0);                   //两个字节转换来的16位无符号整数。
+                            TempNum[4] = BitConverter.ToUInt16(temp5, 0);
+                            TempNum[5] = BitConverter.ToUInt16(temp6, 0);
+                            Temperature[3] = (double)TempNum[3] / 10; ;
+                            Temperature[4] = (double)TempNum[4] / 10; ;
+                            Temperature[5] = (double)TempNum[5] / 10; ;
+                            SaveRecieveState456(Controller_Id, Id[3], Id[4], Id[5], Time);
+                            nSaveRecieveState456(Controller_Id, Id[3], Id[4], Id[5], Time);
+                            SaveRecieveTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5], Time);
+                            nSaveRecieveTemp456(Controller_Id, Temperature[3], Temperature[4], Temperature[5], Time);
+                            nUpdateState4563(Controller_Id, Id[3], Id[4], Id[5], Time);
+                            nUpdateTemp4563(Controller_Id, Temperature[3], Temperature[4], Temperature[5], Time);
 
                         }
                     }
@@ -662,7 +726,7 @@ namespace WenDuJianKong
         /// <param name="temp1"></param>
         /// <param name="temp2"></param>
         /// <param name="temp3"></param>
-        private void nUpdateTemp123(int Id, double temp1, double temp2, double temp3,string time)
+        private void nUpdateTemp1235(int Id, double temp1, double temp2, double temp3,string time)
         {
             string nId = Id.ToString();
             string updatetemp123 = string.Format("update TempState set Temperature1='{0}',Temperature2='{1}',Temperature3='{2}',Time='{3}' where WangKongID='{4}'", temp1, temp2, temp3, time,Id);
@@ -674,8 +738,20 @@ namespace WenDuJianKong
             }
 
         }
+        private void nUpdateTemp1233(int Id, double temp1, double temp2, double temp3, string time)
+        {
+            string nId = Id.ToString();
+            string updatetemp123 = string.Format("update TempState3 set Temperature1='{0}',Temperature2='{1}',Temperature3='{2}',Time='{3}' where WangKongID='{4}'", temp1, temp2, temp3, time, Id);
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlCommand command7 = new SqlCommand(updatetemp123, conn);
+                command7.Connection.Open();
+                command7.ExecuteNonQuery();
+            }
 
-        private void nUpdateTemp456(int Id, double temp1, double temp2, double temp3,string time)
+        }
+
+        private void nUpdateTemp4565(int Id, double temp1, double temp2, double temp3,string time)
         {
             string nId = Id.ToString();
             string updatetemp456 = string.Format("update TempState set Temperature4='{0}',Temperature5='{1}',Temperature6='{2}',Time='{3}' where WangKongID='{4}'", temp1, temp2, temp3, time,Id);
@@ -687,8 +763,20 @@ namespace WenDuJianKong
             }
 
         }
+        private void nUpdateTemp4563(int Id, double temp1, double temp2, double temp3, string time)
+        {
+            string nId = Id.ToString();
+            string updatetemp456 = string.Format("update TempState3 set Temperature4='{0}',Temperature5='{1}',Temperature6='{2}',Time='{3}' where WangKongID='{4}'", temp1, temp2, temp3, time, Id);
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlCommand command8 = new SqlCommand(updatetemp456, conn);
+                command8.Connection.Open();
+                command8.ExecuteNonQuery();
+            }
 
-        private void nUpdateState123(int Id, int id1, int id2, int id3,string time)
+        }
+
+        private void nUpdateState1235(int Id, int id1, int id2, int id3,string time)
         {
             string nId = Id.ToString();
             string updatestate123 = string.Format("update TempState set State1='{0}',State2='{1}',State3='{2}',Time='{3}' where WangKongID='{4}'", id1, id2, id3, time,Id);
@@ -700,7 +788,19 @@ namespace WenDuJianKong
             }
         }
 
-        private void nUpdateState456(int Id, int id1, int id2, int id3,string time)
+        private void nUpdateState1233(int Id, int id1, int id2, int id3, string time)
+        {
+            string nId = Id.ToString();
+            string updatestate123 = string.Format("update TempState3 set State1='{0}',State2='{1}',State3='{2}',Time='{3}' where WangKongID='{4}'", id1, id2, id3, time, Id);
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlCommand command9 = new SqlCommand(updatestate123, conn);
+                command9.Connection.Open();
+                command9.ExecuteNonQuery();
+            }
+        }
+
+        private void nUpdateState4565(int Id, int id1, int id2, int id3,string time)
         {
             string nId = Id.ToString();
             string updatestate456 = string.Format("update TempState set State4='{0}',State5='{1}',State6='{2}',Time='{3}' where WangKongID='{4}'", id1, id2, id3, time, Id);
@@ -711,7 +811,17 @@ namespace WenDuJianKong
                 command10.ExecuteNonQuery();
             }
         }
-
+        private void nUpdateState4563(int Id, int id1, int id2, int id3, string time)
+        {
+            string nId = Id.ToString();
+            string updatestate456 = string.Format("update TempState3 set State4='{0}',State5='{1}',State6='{2}',Time='{3}' where WangKongID='{4}'", id1, id2, id3, time, Id);
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlCommand command10 = new SqlCommand(updatestate456, conn);
+                command10.Connection.Open();
+                command10.ExecuteNonQuery();
+            }
+        }
 
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
@@ -721,6 +831,10 @@ namespace WenDuJianKong
                 case "五号楼":
                     Form2 form2 = new Form2();
                     form2.ShowDialog();
+                    break;
+                case "三号楼":
+                    Form3 form3 = new Form3();
+                    form3.ShowDialog();
                     break;
             }
         }
